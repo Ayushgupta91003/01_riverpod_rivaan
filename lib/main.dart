@@ -1,3 +1,6 @@
+// git pe sab stored hai.
+//
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,40 +10,9 @@ import 'package:riverpodd_rivaan/homeScreen.dart';
 // import 'package:riverpodd_rivaan/user.dart';
 import 'package:riverpodd_rivaan/user_fut.dart';
 
-// final dio = Dio();
-
-// final fetchUserProvider = FutureProvider<User>((ref) async {
-//   // UserRepository user = new UserRepository();
-//   return UserRepository().fetchUserData();
-// });
-
-final fetchUserProvider = FutureProvider<User>((ref) {
-  final userRepository = ref.watch(userRepositoryProvider);
-  return userRepository.fetchUserData();
+final streamProvider = StreamProvider((ref) async* {
+  yield [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 });
-
-// final fetchUserProvider2 = FutureProvider<User>((ref) async {
-//   // Initialize Dio
-//   var dio = Dio();
-
-//   try {
-//     // Fetch data
-//     final response =
-//         await dio.get("https://jsonplaceholder.typicode.com/users/1");
-//     print(response);
-//     // Convert the response to a User object
-//     if (response.statusCode == 200) {
-//       print(response.data);
-//       return User.fromJson(response.data);
-//     } else {
-//       throw Exception('Failed to fetch user: ${response.statusCode}');
-//     }
-//   } catch (e) {
-//     // Handle error
-//     print(e);
-//     throw Exception('Failed to load user');
-//   }
-// });
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
