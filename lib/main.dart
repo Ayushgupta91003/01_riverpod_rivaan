@@ -1,43 +1,46 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpodd_rivaan/04_change_notifier.dart';
+import 'package:riverpodd_rivaan/05_homeScr_future_pro.dart';
 import 'package:riverpodd_rivaan/homeScreen.dart';
-import 'package:riverpodd_rivaan/user.dart';
+// import 'package:riverpodd_rivaan/user.dart';
+import 'package:riverpodd_rivaan/user_fut.dart';
 
-// types
-// 1. Provider -> read only and cannot update the value once given
+// final dio = Dio();
 
-// 1st type
-// final nameProvider = Provider((ref) {
-//   return "Ayush";
+// final fetchUserProvider = FutureProvider<User>((ref) async {
+//   // UserRepository user = new UserRepository();
+//   return UserRepository().fetchUserData();
 // });
-// this provider ref will allow us to talk with other providers.
 
-// 2nd type
-// StateProvider
-// final nameProvider = StateProvider<String?>((ref) => null);   // not necessary to mention String.
-// String? means that it can be null
-// final userProvider = StateNotifierProvider<UserNotifier, User>(
-//   (ref) => UserNotifier(
-//     User(name: "", age: 0),
-//   ),
-// );
-// first(UserNotifier) is the class  which we are returning and second(User) is the state fo the class
+final fetchUserProvider = FutureProvider<User>((ref) {
+  final userRepository = ref.watch(userRepositoryProvider);
+  return userRepository.fetchUserData();
+});
 
-// final userProvider = StateNotifierProvider<UserNotifier, User>(
-//   (ref) => UserNotifier(
-//     User(age: 0, name: " "),
-//   ),
-// );
+// final fetchUserProvider2 = FutureProvider<User>((ref) async {
+//   // Initialize Dio
+//   var dio = Dio();
 
-final userProvider =
-    StateNotifierProvider<UserNotifier, User>((ref) => UserNotifier());
-
-// final userNotifierChange =
-//     ChangeNotifierProvider((ref) => UserNotifierChange());
-
-final userNotifierChangeProvider =
-    ChangeNotifierProvider((ref) => UserNotifierChange());
+//   try {
+//     // Fetch data
+//     final response =
+//         await dio.get("https://jsonplaceholder.typicode.com/users/1");
+//     print(response);
+//     // Convert the response to a User object
+//     if (response.statusCode == 200) {
+//       print(response.data);
+//       return User.fromJson(response.data);
+//     } else {
+//       throw Exception('Failed to fetch user: ${response.statusCode}');
+//     }
+//   } catch (e) {
+//     // Handle error
+//     print(e);
+//     throw Exception('Failed to load user');
+//   }
+// });
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -53,8 +56,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      // home: HomeScreen(),
       // home: HomeScreen4(),
+      home: HomeScreen5(),
     );
   }
 }
